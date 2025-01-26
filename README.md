@@ -56,6 +56,11 @@ make log
 - Auth認証エンドポイント
 
 ```shell
+
+# one line
+http://localhost:8090/realms/custom-realm/protocol/openid-connect/auth?prompt=login&registration=true&response_type=code&scope=openid profile email&redirect_uri=http://example.com&client_id=custom-client
+
+# url + param
 http://localhost:8090/realms/custom-realm/protocol/openid-connect/auth?
 prompt=login
 &registration=true
@@ -70,4 +75,10 @@ prompt=login
 #&code_challenge=fuga
 
 ```
+
+
+## 参考URL
+
+- [Keycloak 日本語ドキュメント](https://keycloak-documentation.openstandia.jp/)
+- [Keycloak official document](https://www.keycloak.org/documentation)
 
