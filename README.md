@@ -81,4 +81,5 @@ prompt=login
 
 - [Keycloak 日本語ドキュメント](https://keycloak-documentation.openstandia.jp/)
 - [Keycloak official document](https://www.keycloak.org/documentation)
+- [Keyclaok Github 22.0.5](https://github.com/keycloak/keycloak/releases/tag/22.0.5)
 
