@@ -19,7 +19,11 @@ mvn archetype:generate -DgroupId=me.tutttuwi.keycloak.example -DartifactId=examp
 - インストール
   - Intellij IDEA
   - maven
-  - Java JDK17
+    - Mac
+      - `brew install maven`
+  - Java JDK21
+    - Mac
+      -  `brew install openjdk@21`
   - make (Makefile実行)
   - docker (DockerDesktop/RancherDesktop)
 
