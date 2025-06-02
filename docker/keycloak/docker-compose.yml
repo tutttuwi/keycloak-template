@@ -14,7 +14,7 @@ services:
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
     networks:
-      - keycloak-net
+      - share-net
 
   keycloak:
     image: bitnami/keycloak:22.0.5
@@ -46,44 +46,45 @@ services:
       - postgres
       - maildev
     networks:
-      - keycloak-net
+      - share-net
   maildev:
     image: maildev/maildev
     ports:
       - 1080:1080
       - 1025:1025
     networks:
-      - keycloak-net
-  oauth2-proxy:
-    image: quay.io/oauth2-proxy/oauth2-proxy:v7.4.0-amd64
-    ports:
-      - 8880:4180
-    environment:
-      OAUTH2_PROXY_PROVIDER: oidc
-      OAUTH2_PROXY_CLIENT_ID: sample-user
-      OAUTH2_PROXY_CLIENT_SECRET: Rvr9Z20En8Zp1TOxx7H6LnxU2hhdIogM
-      OAUTH2_PROXY_REDIRECT_URL: http://localhost:8880/oauth2/callback
-      OAUTH2_PROXY_OIDC_ISSUER_URL: http://keycloak:8090/realms/sample
-      OAUTH2_PROXY_COOKIE_SECRET: "01234567890123456789012345678901"
-      OAUTH2_PROXY_COOKIE_SECURE: "false"
-      OAUTH2_PROXY_COOKIE_NAME: "demo_cookie"
-      OAUTH2_PROXY_EMAIL_DOMAINS: "*"
-      OAUTH2_PROXY_HTTP_ADDRESS: 0.0.0.0:4180
-      OAUTH2_PROXY_UPSTREAMS: http://whoami:3000/ #有効なコンテナ名＋Portを指定しないといけない
-      OAUTH2_PROXY_PASS_AUTHORIZATION_HEADER: "true"
-    restart: always
-    depends_on:
-      - keycloak
-    networks:
-      - keycloak-net
-  whoami:
-    build: ./whoami
-    ports:
-      - "3000:3000"
-    container_name: "whoami"
-    networks:
-      - keycloak-net
+      - share-net
+  # oauth2-proxy:
+  #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.4.0-amd64
+  #   ports:
+  #     - 8880:4180
+  #   environment:
+  #     OAUTH2_PROXY_PROVIDER: oidc
+  #     OAUTH2_PROXY_CLIENT_ID: sample-user
+  #     OAUTH2_PROXY_CLIENT_SECRET: Rvr9Z20En8Zp1TOxx7H6LnxU2hhdIogM
+  #     OAUTH2_PROXY_REDIRECT_URL: http://localhost:8880/oauth2/callback
+  #     OAUTH2_PROXY_OIDC_ISSUER_URL: http://keycloak:8090/realms/sample
+  #     OAUTH2_PROXY_COOKIE_SECRET: "01234567890123456789012345678901"
+  #     OAUTH2_PROXY_COOKIE_SECURE: "false"
+  #     OAUTH2_PROXY_COOKIE_NAME: "demo_cookie"
+  #     OAUTH2_PROXY_EMAIL_DOMAINS: "*"
+  #     OAUTH2_PROXY_HTTP_ADDRESS: 0.0.0.0:4180
+  #     OAUTH2_PROXY_UPSTREAMS: http://whoami:3000/ #有効なコンテナ名＋Portを指定しないといけない
+  #     OAUTH2_PROXY_PASS_AUTHORIZATION_HEADER: "true"
+  #   restart: always
+  #   depends_on:
+  #     - keycloak
+  #   networks:
+  #     - share-net
+  # whoami:
+  #   build: ./whoami
+  #   ports:
+  #     - "3000:3000"
+  #   container_name: "whoami"
+  #   networks:
+  #     - keycloak-net
 
 networks:
-  keycloak-net:
+  share-net:
+    external: true
     driver: bridge
